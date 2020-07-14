@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pomodroid/timermodel.dart';
 import 'package:pomodroid/widget.dart';
-import 'package:pomodroid/percent_indicator.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import './timer.dart';
 import './settings.dart';
+import './settings2.dart';
 
 void main() => runApp(MyApp());
 
@@ -147,6 +148,6 @@ class TimerHomePage extends StatelessWidget {
 
   void goToSettings(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+        context, MaterialPageRoute(builder: (context) => SettingsScreen2()));
   }
 }
