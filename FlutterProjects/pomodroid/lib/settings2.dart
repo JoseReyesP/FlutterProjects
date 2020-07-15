@@ -43,6 +43,7 @@ class _SettingsState extends State<Settings2> {
     txtWork = TextEditingController();
     txtShort = TextEditingController();
     txtLong = TextEditingController();
+    readSettings();
     super.initState();
   }
 
@@ -50,10 +51,109 @@ class _SettingsState extends State<Settings2> {
   Widget build(BuildContext context) {
     txtTest.text = "hola mundo";
     return Container(
-      child: TextField(
-        textAlign: TextAlign.center,
-        controller: txtTest,
+      child: GridView.count(
+        scrollDirection: Axis.vertical,
+        crossAxisCount: 3,
+        childAspectRatio: 3,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        children: <Widget>[
+          Text(
+            'Work',
+            style: textStyle,
+          ),
+          Text(''),
+          Text(''),
+          SettingButton(
+              Color(0xff455A64), '-', 10, -1, WORKTIME, updateSettings),
+          TextField(
+            style: textStyle,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            controller: txtWork,
+          ),
+          SettingButton(
+              Color(0xff009688), '+', 10, 1, WORKTIME, updateSettings),
+          Text(
+            'Short',
+            style: textStyle,
+          ),
+          Text(''),
+          Text(''),
+          SettingButton(
+              Color(0xff455A64), '-', 10, -1, SHORTBREAK, updateSettings),
+          TextField(
+            style: textStyle,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            controller: txtShort,
+          ),
+          SettingButton(
+              Color(0xff009688), '+', 10, 1, SHORTBREAK, updateSettings),
+          Text(
+            'Long',
+            style: textStyle,
+          ),
+          Text(''),
+          Text(''),
+          SettingButton(
+              Color(0xff455A64), '-', 10, -1, LONGBREAK, updateSettings),
+          TextField(
+            style: textStyle,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            controller: txtLong,
+          ),
+          SettingButton(
+              Color(0xff009688), '+', 10, 1, LONGBREAK, updateSettings),
+        ],
       ),
     );
+  }
+
+  readSettings() async {
+    preferences = await SharedPreferences.getInstance();
+    workTime = preferences.getInt(WORKTIME);
+    shortBreak = preferences.getInt(SHORTBREAK);
+    longBreak = preferences.getInt(LONGBREAK);
+
+    setState(() {
+      txtWork.text = workTime.toString();
+      txtShort.text = shortBreak.toString();
+      txtLong.text = longBreak.toString();
+    });
+  }
+
+  updateSettings(String key, int value) {
+    switch (key) {
+      case WORKTIME:
+        {
+          int workTime = preferences.getInt(key);
+          workTime += value;
+          if (workTime >= 1 && workTime <= 180) {
+            preferences.setInt(WORKTIME, workTime);
+          }
+        }
+        break;
+
+      case SHORTBREAK:
+        {
+          int short = preferences.getInt(SHORTBREAK);
+          short += value;
+          if (short >= 1 && short <= 120) {
+            preferences.setInt(SHORTBREAK, short);
+          }
+        }
+        break;
+
+      case LONGBREAK:
+        {
+          int long = preferences.getInt(LONGBREAK);
+          long += value;
+          if (long >= 1 && long <= 180) {
+            preferences.setInt(LONGBREAK, long);
+          }
+        }
+    }
   }
 }

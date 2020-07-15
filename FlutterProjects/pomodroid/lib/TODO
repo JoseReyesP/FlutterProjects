@@ -1,6 +1,0 @@
-solucionar problema de dependecias e importacion de clases - done 
-
-no muestra los defaults de shared preferences en la pagina de de settings 
-    hacer una pagina secundaria de settings donde si muestre los valores por defecto y continuar a partir de ahi
-    definir los valores por defecto en main, y guardarlos en shared preferences
-    cargar los valores por defecto en timer.dart atravez de shared preferences 
