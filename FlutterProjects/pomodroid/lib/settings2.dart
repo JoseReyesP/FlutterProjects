@@ -71,6 +71,16 @@ class _SettingsState extends State<Settings2> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             controller: txtWork,
+            onChanged: (value) {
+              int val = int.parse(value);
+              if (val >= 1 && val <= 180) {
+                preferences.setInt(WORKTIME, val);
+              } else if (val < 1) {
+                preferences.setInt(WORKTIME, 1);
+              } else if (val > 180) {
+                preferences.setInt(WORKTIME, 180);
+              }
+            },
           ),
           SettingButton(
               Color(0xff009688), '+', 10, 1, WORKTIME, updateSettings),
@@ -87,6 +97,16 @@ class _SettingsState extends State<Settings2> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             controller: txtShort,
+            onChanged: (value) {
+              int val = int.parse(value);
+              if (val >= 1 && val <= 180) {
+                preferences.setInt(SHORTBREAK, val);
+              } else if (val < 1) {
+                preferences.setInt(SHORTBREAK, 1);
+              } else if (val > 180) {
+                preferences.setInt(SHORTBREAK, 180);
+              }
+            },
           ),
           SettingButton(
               Color(0xff009688), '+', 10, 1, SHORTBREAK, updateSettings),
@@ -103,6 +123,16 @@ class _SettingsState extends State<Settings2> {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             controller: txtLong,
+            onChanged: (value) {
+              int val = int.parse(value);
+              if (val >= 1 && val <= 180) {
+                preferences.setInt(LONGBREAK, val);
+              } else if (val < 1) {
+                preferences.setInt(LONGBREAK, 1);
+              } else if (val > 180) {
+                preferences.setInt(LONGBREAK, 180);
+              }
+            },
           ),
           SettingButton(
               Color(0xff009688), '+', 10, 1, LONGBREAK, updateSettings),
@@ -132,6 +162,7 @@ class _SettingsState extends State<Settings2> {
           workTime += value;
           if (workTime >= 1 && workTime <= 180) {
             preferences.setInt(WORKTIME, workTime);
+            txtWork.text = workTime.toString();
           }
         }
         break;
@@ -142,6 +173,7 @@ class _SettingsState extends State<Settings2> {
           short += value;
           if (short >= 1 && short <= 120) {
             preferences.setInt(SHORTBREAK, short);
+            txtShort.text = short.toString();
           }
         }
         break;
@@ -152,8 +184,10 @@ class _SettingsState extends State<Settings2> {
           long += value;
           if (long >= 1 && long <= 180) {
             preferences.setInt(LONGBREAK, long);
+            txtLong.text = long.toString();
           }
         }
     }
+    setState(() {});
   }
 }
